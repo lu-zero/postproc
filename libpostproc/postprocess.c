@@ -90,6 +90,7 @@ try to unroll inner for(x=0 ... loop to avoid these damn if(x ... checks
 #include "postprocess.h"
 #include "postprocess_internal.h"
 #include <libavutil/avstring.h>
+#include <libavutil/cpu.h>
 
 unsigned postproc_version(void)
 {
@@ -950,6 +951,24 @@ static const char * context_to_name(void * ptr) {
     return "postproc";
 }
 
+static int get_cpu_caps(int cpuCaps)
+{
+    if (cpuCaps & PP_CPU_CAPS_AUTO) {
+        int caps = av_get_cpu_flags();
+
+        if (caps & AV_CPU_FLAG_MMX)
+            cpuCaps |= PP_CPU_CAPS_MMX;
+        if (caps & AV_CPU_FLAG_MMX2)
+            cpuCaps |= PP_CPU_CAPS_MMX2;
+        if (caps & AV_CPU_FLAG_3DNOW)
+            cpuCaps |= PP_CPU_CAPS_3DNOW;
+        if (caps & AV_CPU_FLAG_ALTIVEC)
+            cpuCaps |= PP_CPU_CAPS_ALTIVEC;
+    }
+
+    return cpuCaps;
+}
+
 static const AVClass av_codec_context_class = { "Postproc", context_to_name, NULL };
 
 pp_context *pp_get_context(int width, int height, int cpuCaps){
@@ -959,7 +978,8 @@ pp_context *pp_get_context(int width, int height, int cpuCaps){
 
     memset(c, 0, sizeof(PPContext));
     c->av_class = &av_codec_context_class;
-    c->cpuCaps= cpuCaps;
+    c->cpuCaps = get_cpu_caps(cpuCaps);
+
     if(cpuCaps&PP_FORMAT){
         c->hChromaSubSample= cpuCaps&0x3;
         c->vChromaSubSample= (cpuCaps>>4)&0x3;
