@@ -1,5 +1,5 @@
 NAME = postproc
 
-HEADERS = postprocess.h
+HEADERS = postprocess.h version.h
 
 OBJS = postprocess.o

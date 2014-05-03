@@ -27,38 +27,7 @@
  *     external postprocessing API
  */
 
-#include <libavutil/avutil.h>
-
-#ifndef LIBPOSTPROC_VERSION_MAJOR
-#define LIBPOSTPROC_VERSION_MAJOR 52
-#define LIBPOSTPROC_VERSION_MINOR  2
-#define LIBPOSTPROC_VERSION_MICRO  0
-#endif
-
-#define LIBPOSTPROC_VERSION_INT AV_VERSION_INT(LIBPOSTPROC_VERSION_MAJOR, \
-                                               LIBPOSTPROC_VERSION_MINOR, \
-                                               LIBPOSTPROC_VERSION_MICRO)
-#define LIBPOSTPROC_VERSION     AV_VERSION(LIBPOSTPROC_VERSION_MAJOR, \
-                                           LIBPOSTPROC_VERSION_MINOR, \
-                                           LIBPOSTPROC_VERSION_MICRO)
-#define LIBPOSTPROC_BUILD       LIBPOSTPROC_VERSION_INT
-
-#define LIBPOSTPROC_IDENT       "postproc" AV_STRINGIFY(LIBPOSTPROC_VERSION)
-
-/**
- * Return the LIBPOSTPROC_VERSION_INT constant.
- */
-unsigned postproc_version(void);
-
-/**
- * Return the libpostproc build-time configuration.
- */
-const char *postproc_configuration(void);
-
-/**
- * Return the libpostproc license.
- */
-const char *postproc_license(void);
+#include "version.h"
 
 #define PP_QUALITY_MAX 6
 
