@@ -961,7 +961,7 @@ static int get_cpu_caps(int cpuCaps)
 
         if (caps & AV_CPU_FLAG_MMX)
             cpuCaps |= PP_CPU_CAPS_MMX;
-        if (caps & AV_CPU_FLAG_MMX2)
+        if (caps & AV_CPU_FLAG_MMXEXT)
             cpuCaps |= PP_CPU_CAPS_MMX2;
         if (caps & AV_CPU_FLAG_3DNOW)
             cpuCaps |= PP_CPU_CAPS_3DNOW;
